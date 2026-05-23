@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Send, Bot, User, Code, Sparkles } from 'lucide-react';
 
 // Using actual fetch call directly since importing groq-sdk in the Vite browser client often requires polyfills for Node features.
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || "";
+const getApiKey = () => {
+  return localStorage.getItem('skillforge_groq_key') || import.meta.env.VITE_GROQ_API_KEY || "";
+};
 
 export default function Chatbot() {
   const [messages, setMessages] = useState([
@@ -41,7 +43,7 @@ export default function Chatbot() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${GROQ_API_KEY}`
+          "Authorization": `Bearer ${getApiKey()}`
         },
         body: JSON.stringify({
           model: "llama-3.3-70b-versatile",

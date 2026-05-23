@@ -1,6 +1,6 @@
 import { LayoutDashboard, BookOpen, Mic, Trophy, Settings, LogOut } from 'lucide-react';
 
-export default function Sidebar({ activeView, setActiveView }) {
+export default function Sidebar({ activeView, setActiveView, onSettingsClick }) {
   const navItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'learning', label: 'Learning Modules', icon: BookOpen },
@@ -56,7 +56,7 @@ export default function Sidebar({ activeView, setActiveView }) {
       </nav>
 
       <div style={{ padding: '1.5rem 1rem', borderTop: '1px solid var(--border)', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-        <button className="btn btn-outline" style={{ width: '100%', justifyContent: 'flex-start', border: 'none' }}>
+        <button className="btn btn-outline" onClick={onSettingsClick} style={{ width: '100%', justifyContent: 'flex-start', border: 'none' }}>
           <Settings size={18} /> Settings
         </button>
         <button className="btn btn-outline" style={{ width: '100%', justifyContent: 'flex-start', border: 'none', color: 'var(--accent)' }}>

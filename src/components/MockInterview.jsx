@@ -2,7 +2,9 @@ import { useState, useEffect, useRef } from 'react';
 import { Mic, MicOff, Video, Play, Square, Award, AlertCircle, Volume2, Settings, RefreshCcw } from 'lucide-react';
 import { learningTracks } from '../data/learningPaths';
 
-const GROQ_API_KEY = import.meta.env.VITE_GROQ_API_KEY || "";
+const getApiKey = () => {
+  return localStorage.getItem('skillforge_groq_key') || import.meta.env.VITE_GROQ_API_KEY || "";
+};
 
 export default function MockInterview() {
   const [sessionState, setSessionState] = useState('idle'); // idle, speaking, listening, evaluating, feedback
@@ -96,7 +98,7 @@ export default function MockInterview() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${GROQ_API_KEY}`
+            "Authorization": `Bearer ${getApiKey()}`
         },
         body: JSON.stringify({
             model: "llama-3.3-70b-versatile",
@@ -142,7 +144,7 @@ export default function MockInterview() {
     if (!transcript.trim()) {
        speak("It seems I didn't catch any answer from you. Let's try another question when you're ready.", () => setSessionState('idle'));
        return;
-    }
+     }
 
     setAiSpeech("I am analyzing your answer...");
 
@@ -151,7 +153,7 @@ export default function MockInterview() {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${GROQ_API_KEY}`
+                "Authorization": `Bearer ${getApiKey()}`
             },
             body: JSON.stringify({
                 model: "llama-3.3-70b-versatile",
